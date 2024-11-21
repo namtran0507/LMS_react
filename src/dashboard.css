@@ -1,0 +1,22 @@
+.dashboard {
+    display: flex;
+    gap: 20px;
+    padding-top: 100px;
+}
+.dashboard--content {
+    background: #fff;
+    flex: 1;
+    padding-top: 100px;
+    border-radius: 20px;
+    padding: 2rem;
+    display: flex;
+    gap: 1.5rem;
+    justify-content: space-between;
+    width: 1200px; 
+    margin: 0 auto; 
+    min-height: 100vh; 
+}
+
+
+
+  
