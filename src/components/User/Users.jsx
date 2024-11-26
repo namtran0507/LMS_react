@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './users.css';
+import BASE_URL from "../../apiconfig.js";
 
 const Users = () => {
     const [users, setUsers] = useState([]);
@@ -8,12 +9,12 @@ const Users = () => {
     const [error, setError] = useState(null);
     const [showConfirm, setShowConfirm] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
-
+    
     // Fetch data from API
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await fetch('http://192.168.1.9:8000/admin/users'); // Đường dẫn API
+                const response = await fetch(`${BASE_URL}/admin/users`); // Đường dẫn API
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -52,7 +53,7 @@ const Users = () => {
         if (selectedUser) {
             setShowConfirm(false); // Hide the modal immediately
             try {
-                const response = await fetch(`http://192.168.1.9:8000/user/get/${selectedUser.id}`, {
+                const response = await fetch(`http://127.0.0.1:8000/user/${selectedUser.id}`, {
                     method: 'DELETE',
                 });
                 if (!response.ok) {

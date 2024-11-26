@@ -10,7 +10,7 @@ import Blocks from "./components/Blocks/Blocks.jsx";
 import Classes from "./components/Classes/Classes.jsx";
 import Courses from "./components/Courses/Courses.jsx";
 import Enrollments from "./components/Enrollments/Enrollments.jsx";
-import StdClasses from "./components/Student/std_classes.jsx";
+import NotEnroll from "./components/NotEnroll/NotEnroll.jsx";
 
 
 
@@ -166,13 +166,30 @@ export default function App() {
             <div className="dashboard">
               <Sidebar /> {/* Sidebar nằm trong App */}
               <div className="dashboard--content">
-                <StdClasses />
+                <Enrollments />
               </div>
             </div>
           ) : (
             <Navigate to="/" />
           )}
         />
+
+        <Route
+          path="/student/not_enrolled"
+          element={isAuthenticated ? (
+            <div className="dashboard">
+              <Sidebar /> {/* Sidebar nằm trong App */}
+              <div className="dashboard--content">
+                <NotEnroll />
+              </div>
+            </div>
+          ) : (
+            <Navigate to="/" />
+          )}
+        />
+
+
+
       </Routes>
     </Router>
   );

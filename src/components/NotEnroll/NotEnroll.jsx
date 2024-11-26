@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import './Enrollments.css';
+import './NotEnroll.css';
 import BASE_URL from "../../apiconfig.js";
 
-const Enrollments = () => {
-    const [enrolledClasses, setEnrolledClasses] = useState([]);
+const NotEnroll = () => {
+    const [notEnrolledClasses, setNotEnrolledClasses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Fetch enrolled classes from API
+    // Fetch data from API
     useEffect(() => {
-        const fetchEnrolledClasses = async () => {
+        const fetchNotEnrolledClasses = async () => {
             try {
                 const token = localStorage.getItem('token'); // Lấy token từ localStorage
-                const response = await fetch(`${BASE_URL}/student/${token}/classes`);
+                const response = await fetch(`${BASE_URL}/student/${token}/not_enrolled`);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
-                setEnrolledClasses(data);
+                setNotEnrolledClasses(data);
                 setLoading(false);
             } catch (err) {
                 setError(err.message);
@@ -25,34 +25,34 @@ const Enrollments = () => {
             }
         };
 
-        fetchEnrolledClasses();
+        fetchNotEnrolledClasses();
     }, []);
 
-    // Handle delete enrollment
-    const handleDelete = async (classId) => {
+    // Handle Enroll
+    const handleEnroll = async (classId) => {
         try {
             const token = localStorage.getItem('token'); // Lấy token từ localStorage
             const response = await fetch(
-                `http://192.168.80.44:8000/student/${token}/remove_enrollment/${classId}`,
+                `http://192.168.80.44:8000/student/${token}/not_enrolled/enroll/${classId}`,
                 {
-                    method: 'DELETE',
+                    method: 'POST',
                 }
             );
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            alert('Enrollment removed successfully!');
-            // Update the state to remove the deleted class from the list
-            setEnrolledClasses((prevClasses) =>
+            alert('Enrolled successfully!');
+            // Update the state to remove the enrolled class from the list
+            setNotEnrolledClasses((prevClasses) =>
                 prevClasses.filter((classItem) => classItem.class_id !== classId)
             );
         } catch (err) {
-            alert('Failed to remove enrollment. Please try again.');
+            alert('Failed to enroll. Please try again.');
         }
     };
 
     if (loading) {
-        return <p>Loading enrolled classes...</p>;
+        return <p>Loading not enrolled classes...</p>;
     }
 
     if (error) {
@@ -60,10 +60,10 @@ const Enrollments = () => {
     }
 
     return (
-        <div className="enrollments-page">
-            <h1 className="page-title">Enrolled Classes</h1>
-            <div className="enrollments-table-wrapper">
-                <table className="enrollments-table">
+        <div className="not-enroll-page">
+            <h1 className="page-title">Not Enrolled Classes</h1>
+            <div className="not-enroll-table-wrapper">
+                <table className="not-enroll-table">
                     <thead>
                         <tr>
                             <th>Block ID</th>
@@ -73,17 +73,17 @@ const Enrollments = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {enrolledClasses.map((classItem, index) => (
+                        {notEnrolledClasses.map((classItem, index) => (
                             <tr key={index}>
                                 <td>{classItem.block_id}</td>
                                 <td>{classItem.class_id}</td>
                                 <td>{classItem.course_id}</td>
                                 <td>
                                     <button
-                                        className="btn delete"
-                                        onClick={() => handleDelete(classItem.class_id)}
+                                        className="btn enroll"
+                                        onClick={() => handleEnroll(classItem.class_id)}
                                     >
-                                        Delete
+                                        Enroll
                                     </button>
                                 </td>
                             </tr>
@@ -95,4 +95,4 @@ const Enrollments = () => {
     );
 };
 
-export default Enrollments;
+export default NotEnroll;

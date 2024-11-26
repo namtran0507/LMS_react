@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import BASE_URL from "../../apiconfig.js";
 
 function SignUpForm() {
   const [state, setState] = useState({
@@ -28,7 +29,7 @@ function SignUpForm() {
     const { user_id, first_name, last_name, username, email, password, role } = state;
 
     try {
-      const response = await axios.post("http://127.0.0.1:8000/users", 
+      const response = await axios.post(`${BASE_URL}/users`, 
         { user_id, first_name, last_name, username, email, password, role }, 
         { headers: { "Content-Type": "application/json" } }
       );

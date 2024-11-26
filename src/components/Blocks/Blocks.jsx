@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Blocks.css';
+import BASE_URL from "../../apiconfig.js";
 
 const Blocks = () => {
     const [blocks, setBlocks] = useState([]);
@@ -13,7 +14,7 @@ const Blocks = () => {
     useEffect(() => {
         const fetchBlocks = async () => {
             try {
-                const response = await fetch('http://192.168.1.9:8000/admin/blocks'); // Đường dẫn API
+                const response = await fetch(`${BASE_URL}/admin/blocks`); // Đường dẫn API
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -53,7 +54,7 @@ const Blocks = () => {
         if (selectedBlock) {
             setShowConfirm(false); // Hide confirmation modal
             try {
-                const response = await fetch(`http://192.168.1.9:8000/block/${selectedBlock.id}`, {
+                const response = await fetch(`http://127.0.0.1:8000/block/${selectedBlock.id}`, {
                     method: 'DELETE',
                 });
                 if (!response.ok) {

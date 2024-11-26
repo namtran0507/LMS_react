@@ -3,6 +3,8 @@ import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
+import BASE_URL from "../../apiconfig.js";
+
 
 function SignInForm() {
   const [state, setState] = useState({
@@ -20,14 +22,14 @@ function SignInForm() {
       [evt.target.name]: value
     });
   };
-
+  
   const handleOnSubmit = async evt => {
     evt.preventDefault();
 
     const { username, password } = state;
     setLoading(true);
     try {
-      const response = await axios.post('http://192.168.1.9:8000/auth', {
+      const response = await axios.post(`${BASE_URL}/auth`, {
         username,
         password,
       });

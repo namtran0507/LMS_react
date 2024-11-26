@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './classes.css';
+import BASE_URL from "../../apiconfig.js";
 
 const Classes = () => {
     const [classes, setClasses] = useState([]);
@@ -13,7 +14,7 @@ const Classes = () => {
     useEffect(() => {
         const fetchClasses = async () => {
             try {
-                const response = await fetch('http://192.168.1.9:8000/admin/classes'); // Đường dẫn API
+                const response = await fetch(`${BASE_URL}/admin/classes`); // Đường dẫn API
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -51,7 +52,7 @@ const Classes = () => {
         if (selectedClass) {
             setShowConfirm(false); // Hide confirmation modal
             try {
-                const response = await fetch(`http://192.168.1.9:8000/class/${selectedClass.classId}`, {
+                const response = await fetch(`http://127.0.0.1:8000/class/${selectedClass.classId}`, {
                     method: 'DELETE',
                 });
                 if (!response.ok) {
